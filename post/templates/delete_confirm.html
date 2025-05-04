@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deleteconfirm</title>
+</head>
+<body>
+    <h2>정말 삭제하시겠습니까?</h2>
+<p>제목: {{ post.title }}</p>
+<p>본문: {{ post.content }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">삭제</button>
+    <a href="{% url 'detail' post.id %}">취소</a>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <!-- ✅ 여러 이미지 반복 출력 -->
+    {% for image in post.images.all %}
+    <img src="{{ image.image.url }}" alt="이미지" style="max-width: 400px;">
+    {% endfor %}
+    
+    {% if user == post.author %}
+    <a href="{% url 'update' post.id %}">수정</a> |
+    <a href="{% url 'delete' post.id %}">삭제</a>
+    {% endif %}
+    <a href="{% url 'list' %}">목록으로 돌아가기</a>
+</body>
+</html>

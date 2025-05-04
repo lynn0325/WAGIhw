@@ -1,0 +1,6 @@
+<h2>회원가입</h2>
+<form method="POST">  <!-- POST 방식으로 데이터 전송 -->
+    {% csrf_token %}  <!-- 보안용 토큰 (CSRF 공격 방지용) -->
+    {{ form.as_p }}  <!-- Django 폼을 <p> 태그로 예쁘게 출력 -->
+    <button type="submit">가입</button>  <!-- 가입 버튼 -->
+</form>

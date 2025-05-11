@@ -13,7 +13,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),  # ✅ 꼭 있어야 함
     path('update/<int:post_id>/', views.update, name='update'),
     path('delete/<int:post_id>/', views.delete, name='delete'),
-
+    path('post/<int:post_id>/comment/', views.add_comment, name='add_comment'),
+    path('post/<int:post_id>/like/', views.toggle_like, name='toggle_like'),
 ]
 
 # ✅ 개발 환경에서 media 경로 열기 (이미지 보기 가능하게)

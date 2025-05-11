@@ -20,6 +20,36 @@
     <a href="{% url 'update' post.id %}">수정</a> |
     <a href="{% url 'delete' post.id %}">삭제</a>
     {% endif %}
+    <!-- 좋아요 버튼 -->
+    <form method="POST" action="{% url 'toggle_like' post.id %}">
+        {% csrf_token %}
+        {% if user in post.likes.all %}
+            <button type="submit">💔 좋아요 취소</button>
+        {% else %}
+            <button type="submit">❤️ 좋아요</button>
+        {% endif %}
+    </form>
+
+<p>좋아요 {{ post.likes.count }}개</p>
+    <h2>댓글</h2>
+
+    <form method="POST" action="{% url 'add_comment' post.id %}">
+        {% csrf_token %}
+        <textarea name="content" placeholder="댓글을 입력하세요" required></textarea>
+        <button type="submit">댓글 작성</button>
+    </form>
+
+    <!-- 댓글 목록 출력 -->
+    {% for comment in post.comments.all %}
+        <div style="margin-top: 10px; border-bottom: 1px solid #ccc; padding: 5px;">
+            <strong>{{ comment.author.username }}</strong>  
+            <p>{{ comment.content }}</p>
+            <small>{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+        </div>
+    {% empty %}
+        <p>아직 댓글이 없습니다.</p>
+    {% endfor %}
+
     <a href="{% url 'list' %}">목록으로 돌아가기</a>
 </body>
 </html>

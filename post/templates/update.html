@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{{ post.title }}</title>
+</head>
+<body><h1>글 수정</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+    
+        <h3>기존 이미지</h3>
+        {% for img in post.images.all %}
+            <div>
+                <img src="{{ img.image.url }}" width="150">
+                <label>
+                    <input type="checkbox" name="delete_images" value="{{ img.id }}"> 삭제
+                </label>
+            </div>
+        {% endfor %}
+    
+        <h3>새 이미지 추가</h3>
+        <input type="file" name="images" multiple>
+    
+        <button type="submit">수정 완료</button>
+    </form>
+</body>
+</html>

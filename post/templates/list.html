@@ -20,6 +20,14 @@
     <a href="{% url 'signup' %}">회원가입</a>
 {% endif %}
 
+<!-- 검색 폼 -->
+<form method="GET" action="{% url 'list' %}">
+    <input type="text" name="q" placeholder="제목 검색" value="{{ query|default:'' }}">
+    <button type="submit">검색</button>
+</form>
+
+<hr>
+
 <h1>게시글 목록</h1>
 <a href="{% url 'write' %}">글 작성</a>
 <ul>

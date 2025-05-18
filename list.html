@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    
+{% if user.is_authenticated %}
+    {{ user.username }}님 환영합니다 |
+    <form action="{% url 'logout' %}" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">로그아웃</button>
+    </form>    
+{% else %}
+    <a href="{% url 'login' %}">로그인</a> |
+    <a href="{% url 'signup' %}">회원가입</a>
+{% endif %}
+
+<!-- 검색 폼 -->
+<form method="GET" action="{% url 'list' %}">
+    <input type="text" name="q" placeholder="제목 검색" value="{{ query|default:'' }}">
+    <button type="submit">검색</button>
+</form>
+
+<hr>
+
+<h1>게시글 목록</h1>
+<a href="{% url 'write' %}">글 작성</a>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{% url 'detail' post.id %}">{{ post.title }}</a><br>
+            {% if post.images.all %}
+                {% for image in post.images.all %}
+                    <img src="{{ image.image.url }}" alt="이미지" style="width: 100px;">
+                {% endfor %}
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>게시글이 없습니다.</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
